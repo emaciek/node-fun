@@ -16,6 +16,9 @@ $(document).ready(function() {
     // Delete User link click
     $('#userList table tbody').on('click', 'td a.linkdeleteuser', deleteUser);
 
+    // Add User button click
+    $('#btnInvoices').on('click', getInvoices);
+
 });
 
 // Functions =============================================================
@@ -161,5 +164,30 @@ function deleteUser(event) {
         return false;
 
     }
+
+};
+
+// getInvoices
+function getInvoices (event) {
+
+    event.preventDefault();
+
+        $.ajax({
+            type: 'get',
+            url: '/invoices' + $(this).attr('rel')
+        }).done(function( response ) {
+
+            // Check for a successful (blank) response
+            if (response.msg === '') {
+            }
+            else {
+                alert('Error: ' + response.msg);
+            }
+
+            // Update the table
+            populateTable();
+
+        });
+
 
 };
